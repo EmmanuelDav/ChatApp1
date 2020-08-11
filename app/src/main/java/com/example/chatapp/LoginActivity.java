@@ -46,7 +46,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String txt_email=email.getText().toString();
                 String txt_passward=passward.getText().toString();
-
                 if(TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_passward)){
                     Toast.makeText(LoginActivity.this, "All fields are required", Toast.LENGTH_SHORT).show();
                 }else{
@@ -55,15 +54,22 @@ public class LoginActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if(task.isSuccessful()){
-                                        Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        startActivity(intent);
-                                        finish();
+                                        try {
+                                            Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            startActivity(intent);
+                                            finish();
+                                        }catch ( Exception E){
+                                            Toast.makeText(LoginActivity.this, E.getMessage(), Toast.LENGTH_SHORT).show();
+
+                                        }
+
                                     }else{
                                         Toast.makeText(LoginActivity.this, "Authentication failed!", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
+
                 }
 
             }
